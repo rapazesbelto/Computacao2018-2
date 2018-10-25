@@ -1,52 +1,113 @@
-# Prerequisites
-*.d
+#include <stdio.h>
+#include <stdlib.h>
+#include <time.h>
 
-# Object files
-*.o
-*.ko
-*.obj
-*.elf
+#define N 10
+#define M 10
 
-# Linker output
-*.ilk
-*.map
-*.exp
+void Inicializando_matrizes(void);
+void RandomizandoBombas(char);
 
-# Precompiled Headers
-*.gch
-*.pch
+int i, j, bomba_i, bomba_j;
+int visivel[N][M];
+char campo[N][M];
 
-# Libraries
-*.lib
-*.a
-*.la
-*.lo
+int main(void)
+{
 
-# Shared objects (inc. Windows DLLs)
-*.dll
-*.so
-*.so.*
-*.dylib
+    int i, j, d;
 
-# Executables
-*.exe
-*.out
-*.app
-*.i*86
-*.x86_64
-*.hex
+    //inicializandos as matrizes
+    void Inicializando_matrizes();
+    void RandomizandoBombas(char d);
 
-# Debug files
-*.dSYM/
-*.su
-*.idb
-*.pdb
+    //imprimindo a matriz campo
+    printf("   ");
 
-# Kernel Module Compile Results
-*.mod*
-*.cmd
-.tmp_versions/
-modules.order
-Module.symvers
-Mkfile.old
-dkms.conf
+    for(j = 0; j < M; j++)
+    {
+        printf("%2d ", j);
+    }
+    printf("\n");
+
+    for(i = 0; i < N; i++)
+    {
+        printf("%2d ", i);
+
+        for(j = 0; j < M; j++)
+        {
+            if(visivel[i][j] == 1)
+                printf("%2c ",campo[i][j]);
+
+            else
+                printf("*  ");
+
+        }
+        printf("\n");
+    }
+
+    //imprimindo matriz visivel
+//    printf("\n");
+//    for(i = 0; i < N; i++)
+//    {
+//        for(j = 0; j < M; j++)
+//        {
+//            printf("%d ",visivel[i][j]);
+//        }
+//        printf("\n");
+//    }
+
+}
+
+void Inicializando_matrizes(void)
+{
+
+    for(i = 0; i < N; i++)
+    {
+        for(j = 0; j < M; j++)
+        {
+            campo[i][j] = '*';
+            visivel[i][j] = 1;//todas as posições são visíveis
+//            visivel[i][j] = 0;//todas as posições não são visíveis
+        }
+    }
+}
+void RandomizandoBombas(char d)
+{
+    
+    srand(time(0));
+    char dificuldade;
+
+    printf("Informe a dificuldade desejada\n");
+    scanf("%c", &dificuldade);
+
+    if (dificuldade == 'f')
+    {
+        for(i = 0; i < 25; i++)
+        {
+        bomba_i = rand() % N;
+        bomba_j = rand() % M;
+        campo[bomba_i][bomba_j] = '1';
+        }
+    }
+
+    if (dificuldade == 'm')
+    {
+        for(i = 0; i < 50; i++)
+        {
+        bomba_i = rand() % N;
+        bomba_j = rand() % M;
+        campo[bomba_i][bomba_j] = '1';
+        }
+    }
+
+    if (dificuldade == 'd')
+    {
+        for(i = 0; i < 75; i++)
+        {
+        bomba_i = rand() % N;
+        bomba_j = rand() % M;
+        campo[bomba_i][bomba_j] = '1';
+        }
+    }
+}
