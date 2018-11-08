@@ -6,7 +6,7 @@
 #define M 10
 
 void Inicializando_matrizes(void);
-void RandomizandoBombas(char);
+void RandomizandoBombas(char dificuldade);
 
 int i, j, bomba_i, bomba_j;
 int visivel[N][M];
@@ -15,7 +15,12 @@ char campo[N][M];
 int main(void)
 {
 
-    int i, j, d;
+    int i, j;
+    char d;
+
+
+    printf("Informe a dificuldade desejada entre f , m ou d\n");
+    scanf("%c", &d);
 
     //inicializandos as matrizes
     void Inicializando_matrizes();
@@ -72,17 +77,16 @@ void Inicializando_matrizes(void)
         }
     }
 }
-void RandomizandoBombas(char d)
+void RandomizandoBombas(char dificuldade)
 {
-    
-    srand(time(0));
-    char dificuldade;
 
-    printf("Informe a dificuldade desejada\n");
-    scanf("%c", &dificuldade);
+    srand(time(0));
+
 
     if (dificuldade == 'f')
     {
+        printf("A dificuldade escolhida foi Facil\n\n");
+
         for(i = 0; i < 25; i++)
         {
         bomba_i = rand() % N;
@@ -93,6 +97,8 @@ void RandomizandoBombas(char d)
 
     if (dificuldade == 'm')
     {
+        printf("A dificuldade escolhida foi Medio\n\n");
+
         for(i = 0; i < 50; i++)
         {
         bomba_i = rand() % N;
@@ -103,6 +109,8 @@ void RandomizandoBombas(char d)
 
     if (dificuldade == 'd')
     {
+        printf("A dificuldade escolhida foi Dificil\n\n");
+
         for(i = 0; i < 75; i++)
         {
         bomba_i = rand() % N;
