@@ -5,28 +5,94 @@
 #define N 10
 #define M 10
 
-void Inicializando_matrizes(void);
-void RandomizandoBombas(char dificuldade);
-
-int i, j, bomba_i, bomba_j;
-int visivel[N][M];
-char campo[N][M];
+void Inicializando_matrizes(char campo[N][M], int visivel[N][M]);
+void RandomizandoBombas(char campo[N][M], char dificuldade);
+void MostrarMatrizCampo(char campo[N][M], int visivel[N][M]);
+void PrintMatrizVisivel(int visivel[N][M]);
 
 int main(void)
 {
 
-    int i, j;
-    char d;
+    int i, j, bomba_i, bomba_j;
+    char dif;
+    char campo[N][M];
+    int visivel[N][M];
 
 
     printf("Informe a dificuldade desejada entre f , m ou d\n");
-    scanf("%c", &d);
+    scanf("%c", &dif);
 
-    //inicializandos as matrizes
-    void Inicializando_matrizes();
-    void RandomizandoBombas(char d);
+    Inicializando_matrizes(campo, visivel);
+    RandomizandoBombas(campo, dif);
+    MostrarMatrizCampo(campo, visivel);
+    PrintMatrizVisivel(visivel);
 
-    //imprimindo a matriz campo
+
+}
+
+void Inicializando_matrizes(char campo[N][M], int visivel[N][M])
+{
+    int i, j;
+
+    for(i = 0; i < N; i++)
+    {
+        for(j = 0; j < M; j++)
+        {
+            campo[i][j] = '*';
+            visivel[i][j] = 1;//todas as posições são visíveis
+//            visivel[i][j] = 0;//todas as posições não são visíveis
+        }
+    }
+}
+
+void RandomizandoBombas(char campo[N][M], char dificuldade)
+{
+
+    int i, j, bomba_i, bomba_j;
+    srand(time(0));
+
+    if(dificuldade == 'f')
+    {
+        printf("A dificuldade escolhida foi Facil\n\n");
+
+        for(i = 0; i < 25; i++)
+        {
+        bomba_i = rand() % N;
+        bomba_j = rand() % M;
+        campo[bomba_i][bomba_j] = '1';
+        }
+    }
+
+    if(dificuldade == 'm')
+    {
+        printf("A dificuldade escolhida foi Medio\n\n");
+
+        for(i = 0; i < 50; i++)
+        {
+        bomba_i = rand() % N;
+        bomba_j = rand() % M;
+        campo[bomba_i][bomba_j] = '1';
+        }
+    }
+
+    if(dificuldade == 'd')
+    {
+        printf("A dificuldade escolhida foi Dificil\n\n");
+
+        for(i = 0; i < 75; i++)
+        {
+        bomba_i = rand() % N;
+        bomba_j = rand() % M;
+        campo[bomba_i][bomba_j] = '1';
+        }
+    }
+}
+
+void MostrarMatrizCampo(char campo[N][M], int visivel[N][M])
+{
+
+    int i, j;
+
     printf("   ");
 
     for(j = 0; j < M; j++)
@@ -50,72 +116,20 @@ int main(void)
         }
         printf("\n");
     }
-
-    //imprimindo matriz visivel
-//    printf("\n");
-//    for(i = 0; i < N; i++)
-//    {
-//        for(j = 0; j < M; j++)
-//        {
-//            printf("%d ",visivel[i][j]);
-//        }
-//        printf("\n");
-//    }
-
 }
 
-void Inicializando_matrizes(void)
+void PrintMatrizVisivel(int visivel[N][M])
 {
 
+    int i, j;
+
+    printf("\n");
     for(i = 0; i < N; i++)
     {
         for(j = 0; j < M; j++)
         {
-            campo[i][j] = '*';
-            visivel[i][j] = 1;//todas as posições são visíveis
-//            visivel[i][j] = 0;//todas as posições não são visíveis
+            printf("%d ",visivel[i][j]);
         }
-    }
-}
-void RandomizandoBombas(char dificuldade)
-{
-
-    srand(time(0));
-
-
-    if (dificuldade == 'f')
-    {
-        printf("A dificuldade escolhida foi Facil\n\n");
-
-        for(i = 0; i < 25; i++)
-        {
-        bomba_i = rand() % N;
-        bomba_j = rand() % M;
-        campo[bomba_i][bomba_j] = '1';
-        }
-    }
-
-    if (dificuldade == 'm')
-    {
-        printf("A dificuldade escolhida foi Medio\n\n");
-
-        for(i = 0; i < 50; i++)
-        {
-        bomba_i = rand() % N;
-        bomba_j = rand() % M;
-        campo[bomba_i][bomba_j] = '1';
-        }
-    }
-
-    if (dificuldade == 'd')
-    {
-        printf("A dificuldade escolhida foi Dificil\n\n");
-
-        for(i = 0; i < 75; i++)
-        {
-        bomba_i = rand() % N;
-        bomba_j = rand() % M;
-        campo[bomba_i][bomba_j] = '1';
-        }
+        printf("\n");
     }
 }
