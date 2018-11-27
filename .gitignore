@@ -9,6 +9,7 @@ void Inicializando_matrizes(char campo[N][M], int visivel[N][M]);
 void RandomizandoBombas(char campo[N][M], char dificuldade);
 void MostrarMatrizCampo(char campo[N][M], int visivel[N][M]);
 void PrintMatrizVisivel(int visivel[N][M]);
+void gameplay(char campo[N][M], int visivel[N][M]);
 
 int main(void)
 {
@@ -17,7 +18,7 @@ int main(void)
     char dif;
     char campo[N][M];
     int visivel[N][M];
-
+    /*implementar funcao para selecionar entre jogo novo ou leitura de arquivo, caso este aconteça, não há necessidade de inicializar-se as matrizes*/
     printf("Informe a dificuldade desejada entre f , m ou d\n");
     scanf("%c", &dif);
 
@@ -25,19 +26,34 @@ int main(void)
     RandomizandoBombas(campo, dif);
     MostrarMatrizCampo(campo, visivel);
     PrintMatrizVisivel(visivel);
+    gameplay(campo, visivel);
+}
+
+int novojogo(void)
+{
+    int aux;
+
+    printf("Informe se quer um novo jogo ou um jogo salvo  com n ou s");
+    scanf("%c", &aux);
+
+    if(aux == n)
+    {
+        return 1;
+    }
+
 }
 
 void Inicializando_matrizes(char campo[N][M], int visivel[N][M])
 {
     int i, j;
-
+//    Função para mostrar as posições visíveis para o jogador
     for(i = 0; i < N; i++)
     {
         for(j = 0; j < M; j++)
         {
             campo[i][j] = '*';
-            visivel[i][j] = 1;//todas as posições são visíveis
-//            visivel[i][j] = 0;//todas as posições não são visíveis
+//            visivel[i][j] = 1;//todas as posições são visíveis
+            visivel[i][j] = 0;//todas as posições não são visíveis
         }
     }
 }
@@ -52,7 +68,7 @@ void RandomizandoBombas(char campo[N][M], char dificuldade)
     {
         printf("A dificuldade escolhida foi Facil\n\n");
 
-        for(i = 0; i < 25; i++)
+        for(i = 0; i < 27; i++)
         {
         bomba_i = rand() % N;
         bomba_j = rand() % M;
@@ -60,11 +76,11 @@ void RandomizandoBombas(char campo[N][M], char dificuldade)
         }
     }
 
-    if(dificuldade == 'm')
+    else if(dificuldade == 'm')
     {
         printf("A dificuldade escolhida foi Medio\n\n");
 
-        for(i = 0; i < 50; i++)
+        for(i = 0; i < 52; i++)
         {
         bomba_i = rand() % N;
         bomba_j = rand() % M;
@@ -72,11 +88,11 @@ void RandomizandoBombas(char campo[N][M], char dificuldade)
         }
     }
 
-    if(dificuldade == 'd')
+    else if(dificuldade == 'd')
     {
         printf("A dificuldade escolhida foi Dificil\n\n");
 
-        for(i = 0; i < 75; i++)
+        for(i = 0; i < 77; i++)
         {
         bomba_i = rand() % N;
         bomba_j = rand() % M;
@@ -130,3 +146,168 @@ void PrintMatrizVisivel(int visivel[N][M])
         printf("\n");
     }
 }
+
+void gameplay(char campo [N][M], int visivel [N][M])
+{
+
+    int c1,c2;
+    int contJogadas = 0, contBonus = 0;
+    int vidas = 3;
+
+    while(vidas != 0)
+    {
+        printf("\tNumero de vidas: %d\n\n", vidas);
+        printf("Informe uma linha e uma coluna\n");
+        scanf("%d%d", &c1, &c2);
+
+        if((c1 <= 9 && c1 >= 0) && (c2 <= 9 && c2 >= 0))
+        {
+        contJogadas++;
+
+//        if(contBonus == 5)
+//            flags += 3;
+
+            if(contJogadas == 1)
+            {
+                if(campo[c1][c2] == '1')
+                {
+
+                    visivel[c1][c2] = 2;
+
+                }
+                else
+                {
+                    visivel[c1][c2] = 1;
+                    contBonus++;
+
+                }
+            }
+            else
+            {
+                if(campo[c1][c2] == '1')
+                {
+
+                    visivel[c1][c2] = 1;
+                    contBonus = 0;
+                    vidas--;
+                }
+                else
+                {
+                    visivel[c1][c2] = 1;
+                    contBonus++;
+                }
+            }
+//    if (contBonus == 5)
+//    {
+//        //implementar randomizar três flags
+//        printf("Bonus: Voce ganhou 3 flags");
+//        contBonus = 0;
+//    }
+
+
+    MostrarMatrizCampo(campo, visivel);
+    PrintMatrizVisivel(visivel);
+//    printf("%d\n", contJogadas);
+        }
+        else
+        {
+            printf("Coordenada invalida\n");
+        }
+    }
+}
+
+
+//int varrerBombas()
+//    {
+//
+//          int contBombas = 0;
+//
+//        if((c1 >= 0 && c1 <= 9) && (c2 >= 0 && c2 <= 9))
+//    {
+////        linha zero
+//        if(c1 == 0 && (c2 > 0 && c2 < 9))
+//        {
+//            if((aux[c1][c2 - 1]) == 49)
+//                contBombas++;
+//            if((aux[c1][c2 + 1]) == 49)
+//                contBombas++;
+//            if((aux[c1 + 1][c2]) == 49)
+//                contBombas++;
+//            if((aux[c1 + 1][c2 + 1]) == 49)
+//                contBombas++;
+//            if((aux[c1 + 1][c2 - 1]) == 49)
+//                contBombas++;
+//        }
+////        linha nove
+//
+//        else if(c1 == 9 && (c2 > 0 && c2 < 9))
+//        {
+//            if((aux[c1][c2 - 1]) == 49)
+//                contBombas++;
+//            if((aux[c1][c2 + 1]) == 49)
+//                contBombas++;
+//            if((aux[c1 - 1][c2]) == 49)
+//                contBombas++;
+//            if((aux[c1 - 1][c2 + 1]) == 49)
+//                contBombas++;
+//            if((aux[c1 - 1][c2 - 1]) == 49)
+//                contBombas++;
+//        }
+////        coluna zero
+//        else if(c2 == 0 && (c1 > 0 && c1 < 9))
+//        {
+//            if((aux[c1 - 1][c2]) == 49)
+//                contBombas++;
+//            if((aux[c1 + 1][c2]) == 49)
+//                contBombas++;
+//            if((aux[c1 + 1][c2 - 1]) == 49)
+//                contBombas++;
+//            if((aux[c1 - 1][c2 - 1]) == 49)
+//                contBombas++;
+//            if((aux[c1][c2 - 1]) == 49)
+//                contBombas++;
+//        }
+//
+////        coluna nove
+//
+//        else if(c2 == 9 && (c1 > 0 && c1 < 9))
+//        {
+//            if((aux[c1 - 1][c2]) == 49)
+//                contBombas++;
+//            if((aux[c1 + 1][c2]) == 49)
+//                contBombas++;
+//            if((aux[c1 - 1][c2 - 1]) == 49)
+//                contBombas++;
+//            if((aux[c1][c2 - 1]) == 49)
+//                contBombas++;
+//            if((aux[c1 + 1][c2 - 1]) == 49)
+//                contBombas++;
+//        }
+//
+//            //  para uma coordenada no canto superior direito
+//        else if(c1 == 0 && c2 == 0)
+//        {
+//            if(aux[c1][c2 + 1] == 49)
+//                contBombas++;
+//
+//            if(aux[c1 + 1][c2 + 1] == 49)
+//                contBombas++;
+//
+//            if(aux[c1 + 1][c2] == 49)
+//                contBombas++;
+//
+//            if(aux[])
+//        }
+//    }
+//     else
+//        printf("Coordenada invalida");
+//    }
+//    }
+//
+//}
+
+//search pointers and registers in c
+//algoritmo de busca em amplitude
+//na hora de contar as casas da vizinhança contar as 8, entretanto na hora de implementar a expansão de vizinhança contras só as verticais e horizontasi
+//usar tabela ascii
+
